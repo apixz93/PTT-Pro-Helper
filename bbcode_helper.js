@@ -14,7 +14,7 @@
     };
 
     const DEFAULT_SETTINGS = {
-        MENU_TITLE: "PTT Pro Helper v15",
+        MENU_TITLE: "PTT Pro Helper v15.1",
         TAG_NAME: "jrptt mohd hafiz",
         FONT_SIZE: "22px",
         REPLY_MAX_HEIGHT: "100px", 
