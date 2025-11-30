@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "PTT Pro Helper (v15.0)",
-    "version": "15.0",
+    "name": "PTT Pro Helper (v15.1)",
+    "version": "15.1",
     "description": "All-in-one PTT Helper with Standalone QC Checklist & Cloud Sync.",
     "permissions": ["scripting", "storage"],
     "host_permissions": [
