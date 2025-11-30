@@ -14,7 +14,7 @@
     };
 
     const DEFAULT_SETTINGS = {
-        MENU_TITLE: "PTT Pro Helper v15.1",
+        MENU_TITLE: "PTT Pro Helper v15",
         TAG_NAME: "jrptt mohd hafiz",
         FONT_SIZE: "22px",
         REPLY_MAX_HEIGHT: "100px", 
@@ -784,7 +784,7 @@
         tabs[0].click(); 
     }
 
-    /**
+ /**
      * Membina Menu QC Checklist di sebelah kanan.
      * 🔗 MEMANGGIL: createCheckbox
      */
@@ -808,48 +808,81 @@
             width: "240px" 
         });
 
+        // --- [BARU] Butang Toggle Minimize (▼) ---
+        const toggleButton = document.createElement("div");
+        toggleButton.innerText = "▼";
+        Object.assign(toggleButton.style, {
+            position: "absolute",
+            top: "-25px",
+            left: "0", 
+            background: "#4CAF50", // Warna hijau ikut tema QC
+            color: "white",
+            padding: "2px 8px",
+            borderRadius: "5px 5px 0 0",
+            cursor: "pointer",
+            fontSize: "14px",
+            fontWeight: "bold"
+        });
+        qcSticky.appendChild(toggleButton);
+
         const title = document.createElement("div");
         title.innerHTML = `<b>Mandatory QC Checklist</b>`;
         Object.assign(title.style, {
             color: "#4CAF50",
             textAlign: "center",
             marginBottom: "5px",
-            cursor: "pointer", // Tunjuk user boleh tekan
-            userSelect: "none" // Elak highlight teks bila double click
+            cursor: "pointer", 
+            userSelect: "none"
         });
         
-        // --- ⚡ FITUR BARU: DOUBLE TAP MAGIC ⚡ ---
-        title.title = "Double Tap untuk Tanda Semua";
+        // Double Tap Title -> Select All
         title.ondblclick = () => {
             const boxes = document.querySelectorAll("#qcContent input[type='checkbox']");
             boxes.forEach(box => {
                 box.checked = true;
-                if (box.onchange) box.onchange(); // Trigger logic unlock button
+                if (box.onchange) box.onchange(); 
             });
             showToast("✅ QC Checklist Completed!");
         };
-        // ------------------------------------------
 
         qcSticky.appendChild(title);
-        
-        // --- Mula Kod Tambahan ---
         
         const qcContent = document.createElement("div");
         qcContent.id = "qcContent";
         qcSticky.appendChild(qcContent);
 
-        // Membina checkbox berdasarkan ID yang ada di ZON 5
+        // Logic Minimize/Expand
+        let isMinimized = localStorage.getItem("qc_minimized") === "true";
+        
+        function applyState() {
+            if (isMinimized) {
+                qcContent.style.display = "none";
+                toggleButton.innerText = "▲";
+                qcSticky.style.opacity = "0.8"; // Kurangkan opacity bila minimize
+            } else {
+                qcContent.style.display = "block";
+                toggleButton.innerText = "▼";
+                qcSticky.style.opacity = "1";
+            }
+        }
+
+        toggleButton.onclick = () => {
+            isMinimized = !isMinimized;
+            localStorage.setItem("qc_minimized", isMinimized);
+            applyState();
+        };
+
+        // Apply state awal (ingat setting user)
+        applyState();
+
         createCheckbox("checklist_playstore", "Play Store Link", qcContent);
         createCheckbox("checklist_description", "Description", qcContent);
         createCheckbox("checklist_download", "Download Link", qcContent);
         createCheckbox("checklist_screenshot", "Screenshot", qcContent);
 
-        // Wajib ada baris ini supaya menu muncul di skrin!
         document.body.appendChild(qcSticky);
-
-    } // <--- Ini bracket penutup yang anda tanya tadi
+    }
     
-    // --- Tamat Kod Tambahan (Terus masuk ke ZON 7 di bawah ini) ---
 
 // =================================================================
     // ZON 7: FUNGSI SOKONGAN GLOBAL (GLOBAL HELPERS)
