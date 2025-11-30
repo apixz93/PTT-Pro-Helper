@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "PTT Pro Helper (v15.0)",
+    "version": "15.0",
+    "description": "All-in-one PTT Helper with Standalone QC Checklist & Cloud Sync.",
+    "permissions": ["scripting", "storage"],
+    "host_permissions": [
+      "https://platinmods.com/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["https://platinmods.com/threads/*"],
+        "js": ["bbcode_helper.js"]
+      }
+    ]
+}
